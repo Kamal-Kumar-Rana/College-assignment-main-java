@@ -1,0 +1,302 @@
+//Like operator----------------------------------------------------------->>
+Select S_Name from std where S_Name like 'K%';
+Select S_Name from std where S_Name like 'S%';
+ Select S_Name from std where S_Name like '%it%';
+ Select S_Name from std where S_Name like '_a%';
+Select S_Name from std where S_Name like '__a%';
+
+//IN operators-------------------------------------------------------------->>
+ select * from std where S_Roll in(1728,1760);
+
+//Between Operator---------------------------------------------------------->>
+ select * from std where S_roll Between 1728 and 1760;
+
+//Pseudo Columns----------------------------------------------------------->>
+select sysdate,systimestamp from dual ;
+select uid,user from dual ;
+
+//Order by---------------------------------------------------------------->>
+select * from std order by S_Roll;//asc
+select * from std order by S_Roll desc;
+select * from std order by S_Roll,S_Name desc;//Preferace first S_Roll
+
+//Rename,Droped------------------------------------------------------------>>
+Rename Student to students;
+ drop table students;
+
+//Roll Back------------------------>
+SQL> savepoint s1;
+Savepoint created.
+SQL> create table contact(id number(10), name varchar(20));
+Table created.
+SQL> insert into contact values(1,'Kamal');
+1 row created.
+SQL> update contact set name='Kamal Kumar Rana' where id=1;
+1 row updated.
+SQL> select * from contact;
+
+        ID NAME
+---------- --------------------
+         1 Kamal Kumar Rana
+
+SQL> roll back to s1;// Roll back in use before commit;
+Rollback complete.
+SQL> select * from contact;
+no rows selected
+
+---------------------------------------------------------------------------------
+SQL> savepoint s1;
+Savepoint created.
+SQL> create table contact(id number(10), name varchar(20));
+Table created.
+SQL> insert into contact values(1,'Kamal');
+1 row created.
+SQL> update contact set name='Kamal Kumar Rana' where id=1;
+1 row updated.
+SQL> select * from contact;
+
+        ID NAME
+---------- --------------------
+         1 Kamal Kumar Rana
+SQL> commit;
+Commit complete.
+SQL> roll back to s1;// Roll back in use after commit;
+Rollback complete.
+SQL> select * from contact;
+
+        ID NAME
+---------- --------------------
+         1 Kamal Kumar Rana
+
+// Table space create---------------------------------------->
+SQL> create tablespace DEMO datafile
+  2  'C:\oraclexe\app\oracle\oradata\XE\DEMO.DEF'
+  3  size 50M;
+
+//Drop Tablespace------------------------------------------->
+drop  tablespace Demo;
+
+//User create----------------------------------------------->
+create user kumar identified by 2002;
+
+
+create user kumar identified by 2002
+  2  default tablespace demo
+  3  temporary tablespace temp
+  4  quota unlimited on demo;
+
+DROP user kumar;
+
+//Role--------------------------------->
+create role GM;
+
+grant create table,create session to GM;
+Grant succeeded.
+
+grant GM to kumar;
+Grant succeeded.
+
+//INSERT---------------------------------------------------------->
+create table tb1(Id number(10),Name varchar(20));
+Table created.
+
+ insert all
+  2  into tb1 values(1,'kamal')
+  3  into tb1 values(2,'samir')
+  4  into tb1 values(3,'samar')
+  5  into tb1 values(4,'emon')
+  6  select * from dual;
+
+create table dept(D_No number(10),D_Name varchar(10));
+
+
+ insert into dept values(&D_No,'&D_Name');
+Enter value for d_no: 30
+Enter value for d_name: BCA
+old   1: insert into dept values(&D_No,'&D_Name')
+new   1: insert into dept values(30,'BCA')
+
+
+//Table alias
+select * from dept;
+
+      D_NO D_NAME
+---------- ----------
+        10 MCA
+        20 MBA
+        30 BCA
+        40 M.TECH
+        50 B.TECH
+
+SQL> select * from emp;
+
+      E_NO E_NAME                     D_NO
+---------- -------------------- ----------
+         1 kamal                        40
+         2 samar                        50
+         3 chandan                      10
+         4 tuhin                        10
+         5 ram                          60
+
+SQL> select E_Name,D_Name from emp,dept where dept.D_NO=emp.D_No;
+ select E_Name,D_Name from emp e ,dept d where d.D_NO=e.D_No;// same using table alias
+
+E_NAME               D_NAME
+-------------------- ----------
+tuhin                MCA
+chandan              MCA
+kamal                M.TECH
+samar                B.TECH
+
+SQL> select D_No "number",D_Name "Name" from dept; //column alias
+
+    number Name
+---------- ----------
+        10 MCA
+        20 MBA
+        30 BCA
+        40 M.TECH
+        50 B.TECH
+
+SQL> select E_No "number",D_No "Dept. No",E_Name "Emp Name" from emp;
+
+    number   Dept. No Emp Name
+---------- ---------- --------------------
+         1         40 kamal
+         2         50 samar
+         3         10 chandan
+         4         10 tuhin
+         5         60 ram
+
+SQL> select E_No "number",D_No+1 "Dept. No",E_Name "Emp Name" from emp;
+
+    number   Dept. No Emp Name
+---------- ---------- --------------------
+         1         41 kamal
+         2         51 samar
+         3         11 chandan
+         4         11 tuhin
+         5         61 ram
+
+
+
+##-------------------------------------------------->>
+//Equi join ----------------------------->
+## Cartision product----->//Cross join
+SQL> select * from emp,dept;
+SQL> select * from dept cross join dept;//same
+
+      E_NO E_NAME                     D_NO       D_NO D_NAME
+---------- -------------------- ---------- ---------- ----------
+         1 kamal                        40         10 MCA
+         1 kamal                        40         20 MBA
+         1 kamal                        40         30 BCA
+         1 kamal                        40         40 M.TECH
+         1 kamal                        40         50 B.TECH
+         2 samar                        50         10 MCA
+         2 samar                        50         20 MBA
+         2 samar                        50         30 BCA
+         2 samar                        50         40 M.TECH
+         2 samar                        50         50 B.TECH
+         3 chandan                      10         10 MCA
+
+      E_NO E_NAME                     D_NO       D_NO D_NAME
+---------- -------------------- ---------- ---------- ----------
+         3 chandan                      10         20 MBA
+         3 chandan                      10         30 BCA
+         3 chandan                      10         40 M.TECH
+         3 chandan                      10         50 B.TECH
+         4 tuhin                        10         10 MCA
+         4 tuhin                        10         20 MBA
+         4 tuhin                        10         30 BCA
+         4 tuhin                        10         40 M.TECH
+         4 tuhin                        10         50 B.TECH
+         5 ram                          60         10 MCA
+         5 ram                          60         20 MBA
+
+      E_NO E_NAME                     D_NO       D_NO D_NAME
+---------- -------------------- ---------- ---------- ----------
+         5 ram                          60         30 BCA
+         5 ram                          60         40 M.TECH
+         5 ram                          60         50 B.TECH
+
+25 rows selected.
+//Now we wil be join----------------------->
+select * from emp,dept  where dept.D_no=emp.D_no;
+
+      E_NO E_NAME                     D_NO       D_NO D_NAME
+---------- -------------------- ---------- ---------- ----------
+         4 tuhin                        10         10 MCA
+         3 chandan                      10         10 MCA
+         1 kamal                        40         40 M.TECH
+         2 samar                        50         50 B.TECH
+
+SQL> select E_no,E_name,D_name from emp,dept  where dept.D_no=emp.D_no;
+
+      E_NO E_NAME               D_NAME
+---------- -------------------- ----------
+         4 tuhin                MCA
+         3 chandan              MCA
+         1 kamal                M.TECH
+         2 samar                B.TECH
+
+//Non Equi join-------------------------->
+SQL> select E_no,E_name,D_name from emp,dept  where dept.D_no>emp.D_no;
+
+      E_NO E_NAME               D_NAME
+---------- -------------------- ----------
+         3 chandan              MBA
+         3 chandan              BCA
+         3 chandan              M.TECH
+         3 chandan              B.TECH
+         4 tuhin                MBA
+         4 tuhin                BCA
+         4 tuhin                M.TECH
+         4 tuhin                B.TECH
+         1 kamal                B.TECH
+
+9 rows selected.
+
+
+SQL> select E_no,E_name,D_name from emp,dept  where dept.D_no<emp.D_no;
+
+      E_NO E_NAME               D_NAME
+---------- -------------------- ----------
+         5 ram                  B.TECH
+         5 ram                  M.TECH
+         5 ram                  BCA
+         5 ram                  MBA
+         5 ram                  MCA
+         2 samar                M.TECH
+         2 samar                BCA
+         2 samar                MBA
+         2 samar                MCA
+         1 kamal                BCA
+         1 kamal                MBA
+
+      E_NO E_NAME               D_NAME
+---------- -------------------- ----------
+         1 kamal                MCA
+
+12 rows selected.
+// self join============================================================
+SQL> select e1.E_no,e2.E_name,e1.D_no from emp e1, emp e2 where e1.E_no=e2.E_no;
+
+      E_NO E_NAME                     D_NO
+---------- -------------------- ----------
+         1 kamal                        40
+         2 samar                        50
+         3 chandan                      10
+         4 tuhin                        10
+         5 ram                          60
+//Natural join------------------------->
+
+SQL> select E_no,E_name,D_name,D_no from emp natural join dept;    
+     
+      E_NO E_NAME               D_NAME           D_NO
+---------- -------------------- ---------- ----------
+         4 tuhin                MCA                10
+         3 chandan              MCA                10
+         1 kamal                M.TECH             40
+         2 samar                B.TECH             50
+
