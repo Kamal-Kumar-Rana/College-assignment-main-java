@@ -1,0 +1,151 @@
+SQL> select * from account;
+
+BRANCH_NAM     ACC_NO    BALANCE
+---------- ---------- ----------
+GHATAL           9875     150000
+DASPUR           6547     200000
+KOLKATA          5432     500000
+MIDNAPORE        9865     250000
+KOLKATA          5420     111000
+NARAJOL          9832      50000
+GHATAL           9880      80000
+6 rows selected.
+
+SQL> select * from Branch;
+
+BRANCH_NAM BRANCH_CIT  ASSETS_CR
+---------- ---------- ----------
+GHATAL     GHATAL       70000000
+MIDNAPORE  MIDNAPORE    95000000
+KOLKATA    KOLKATA     110000000
+DASPUR     DASPUR       60000000
+NARAJOL    NARAJOL      40000000
+
+SQL> select * from DEpositer;
+
+CUST_NAME                ACC_NO
+-------------------- ----------
+KAMAL KUMAR RANA           9875
+BAPPA MONDAL               9865
+NATASA ROY                 5432
+MINA PAL                   9832
+RIYA DAS                   9880
+SOURAV RANA                6547
+ROHIT SINGHA               5420
+
+7 rows selected.
+
+SQL> select * from Loan;
+
+BRANCH_NAM    LOAN_NO     AMOUNT
+---------- ---------- ----------
+GHATAL           1501      50000
+MIDNAPORE        1502     100000
+KOLKATA          1503     150000
+NARAJOL          1504      10000
+DASPUR           1505      20000
+
+SQL> select * from Borrower;
+
+no rows selected
+
+SQL> insert ALL
+  2  into Borrower values ('BAPPA MONDAL',1502)
+  3  into Borrower values ('ROHIT SINGHA',1503)
+  4  into Borrower values ('MINA PAL',1504)
+  5  into Borrower values ('SOURAV RANA',1505)
+  6  into Borrower values ('KAMAL KUMAR RANA',1501)
+  7  SELECT * FROM DUAL;
+
+5 rows created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> select * from Borrower;
+
+CUST_NAME               LOAN_NO
+-------------------- ----------
+BAPPA MONDAL               1502
+ROHIT SINGHA               1503
+MINA PAL                   1504
+SOURAV RANA                1505
+KAMAL KUMAR RANA           1501
+
+SQL> select * from customer;
+CUST_NAME            CUST_CITY  CUST_STREE     ACC_NO
+-------------------- ---------- ---------- ----------
+KAMAL KUMAR RANA     GHATAL     GH-RA RD         9875
+BAPPA MONDAL         MIDNAPORE  TP-NH60 RD       9865
+NATASHA ROY          KOLKATA    COLLEGE ST       5432
+MINA PAL             NARAJOL    NARAJOL RD       9832
+RIYA DAS             GHATAL     GH RD		 9880
+SOURAV RANA          DASPUR     DASPUR RD        6547
+ROHIT SINGHA         KOLKATA    1NO.DH RD        5432
+
+7 rows selected.
+
+#1------------------------------------------>
+SQL> select Cust_name from customer where acc_No in(select acc_no from account where Branch_Name in(select branch_city from branch where branch_city='KOLKATA'));
+
+CUST_NAME
+--------------------
+NATASHA ROY
+ROHIT SINGHA
+#2----------------------------------------------->
+SQL> SELECT BRANCH_NAME FROM ACCOUNT GROUP BY BRANCH_NAME HAVING AVG(BALANCE)=(SELECT MIN(AVG(BALANCE)) FROM ACCOUNT GROUP BY BRANCH_NAME);
+
+BRANCH_NAM
+----------
+NARAJOL
+#3------------------------------------------------------->
+SQL>  (select cust_Name from borrower where loan_no in(Select loan_no from loan where branch_name='KOLKATA')) INTERSECT (select cust_Name from borrower where loan_no in(Select loan_no from loan where branch_name='KOLKATA'));
+
+CUST_NAME
+--------------------
+ROHIT SINGHA
+
+#4------------------------------------------------->
+
+SQL> select Branch_Name from branch where assets_CR > 90000000;
+
+BRANCH_NAM
+----------
+MIDNAPORE
+KOLKATA
+#5----------------------------------------------------->
+SQL> select branch_name from account group by branch_NAme having avg(balance) =(select max(avg(balance)) from account group by branch_name having avg(balance) <( select max(avg(balance)) from account group by branch_name));
+
+BRANCH_NAM
+----------
+MIDNAPORE
+#6------------------------------------->
+
+SQL> select branch_name,avg(balance) "Average" from account group by branch_name;
+
+BRANCH_NAM    Average
+---------- ----------
+NARAJOL         50000
+KOLKATA        305500
+DASPUR         200000
+GHATAL         115000
+MIDNAPORE      250000
+#8---------------------------------------
+SQL> Select avg(balance) ,branch_name from account where balance > 120000 group by branch_name;
+
+AVG(BALANCE)   BRANCH_NAME
+------------   -------------
+305550		KOLKATA
+200000		DASPUR
+250000		MIDNAPORE
+
+#9------------------------------------------------
+SQL> select cust_name from depositer where acc_no in(select acc_no from account where branch_name =(select branch_name from branch where assets_cr=(select max(assets_cr) from branch)));
+
+CUST_NAME
+--------------------
+NATASA ROY
+ROHIT SINGHA
+
+SQL>

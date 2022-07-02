@@ -1,0 +1,126 @@
+SQL> select * from project;
+
+      P_NO P_NAME                         P_MANAGER
+---------- ------------------------------ --------------------
+        10 Library Manegement System      Ratan Das
+        20 Railway Management System      Samir Rana
+        30 Medical Shop Manage system     Soma Roy
+        40 Exam Manegement System         Anupam Bose
+        50 Online servay System           Riya Das
+        60 College DBMS                   Rohit Roy
+                                          Rimpa sen
+                                          Rishikash Bowmik
+SQL> select * from Employee;
+
+      E_NO E_NAME                   SALARY
+---------- -------------------- ----------
+       101 Arpan Roy                 45000
+       102 Rahul Sen                 50000
+       103 Rimi Pal                  60000
+       210 Kamal Kumar Rana          85000
+       215 Asit Monda                82000
+       220 Shartak pal               81000
+       225 Priya Mondal              84000
+       301 Krishna Das               86000
+       305 Ankita Karmakar           60000
+
+SQL> select * from Depertment;
+
+      D_NO D_NAME                E_NO       P_NO
+---------- --------------- ---------- ----------
+        10 BCA                    101         30
+        20 Bsc CS                 102         10
+        30 B.Tech CS              103         20
+        40 M.Tech CS              210         40
+        50 MCA                    215         50
+        10 BCA                    220         30
+        10 BCA                    225         30
+        40 M.Tech cs              301         60
+        40 M.Tech cs              305         60
+
+9 rows selected.
+
+SQL> select * from assignedto;
+
+      P_NO       E_NO
+---------- ----------
+        30        101
+        10        102
+        20        103
+        40        210
+        50        215
+        60        301
+        60        305
+        30        220
+        30        225
+
+7 rows selected.
+
+
+
+
+#2-----
+SQL>select * from Employee where salary > 80000 and E_No in (select  E_No from depertment where D_no in (10)) ;
+
+
+      E_NO E_NAME                   SALARY
+---------- -------------------- ----------
+       220 Shartak pal               81000
+       225 Priya Mondal              84000
+
+#3-----------
+SQL> select E_no from employee order by E_Name asc;
+
+      E_NO
+----------
+       101
+       215
+       210
+       225
+       102
+       103
+       220
+
+7 rows selected.
+
+SQL> select E_no from employee order by salary asc;
+
+      E_NO
+----------
+       101
+       102
+       103
+       220
+       215
+       225
+       210
+
+7 rows selected.
+
+#4------------------------->
+SQL> select E_Name from Employee where E_No in(select E_no from assignedto where P_No in(30));
+
+E_NAME
+--------------------
+Arpan Roy
+
+#5--------------------------------->
+SQL> select E_name from employee where E_No in(select E_No from Assignedto where P_no in(Select P_No from project where P_Manager='Rohit Roy'));
+
+E_NAME
+--------------------
+Krishna Das
+Ankita Karmakar
+#6------------------------------------>
+SQL> select E_name from employee where E_No in(select E_no from depertment where D_No in (50));
+
+E_NAME
+--------------------
+Asit Monda
+#7------------------------------------------------>
+SQL> select P_Manager from project where P_no is null;
+
+P_MANAGER
+--------------------
+Rimpa sen
+Rishikash Bowmik

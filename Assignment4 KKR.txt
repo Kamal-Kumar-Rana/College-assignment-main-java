@@ -1,0 +1,424 @@
+SQL> create table studies(P_Name char(20),S_Place varchar(20),Course varchar(10),C_Cost number(10));
+
+Table created.
+
+SQL> create table Softwar(P_Name char(20),Title varchar(30),Dev_in varchar(20),S_Cost number(10),D_cost number(10),sold number(10));
+
+Table created.
+
+SQL> create table Programmer(P_Name char(20),DOB date,DOJ date,Sex char(6),Prof1 varchar(10),Prof2 varchar(10),salary number(10));
+
+Table created.
+
+SQL> select * from studies;
+
+P_NAME               S_PLACE              COURSE         C_COST
+-------------------- -------------------- ---------- ----------
+Kamal Kumar Rana     Midnapore            BCA             80000
+Rimpa Pal            Kolkata              B.Tech         150000
+Rakesh Roy           Kolkata              MCA            200000
+Suman Sen            Pune                 M.Tech         300000
+Shartak Roy          Kolkata              BCA            120000
+Riya Mondal          Pune                 MCA            320000
+Sourav Rana          Kharagpur            B.Tech         180000
+Prity Roy            Howrah               M.Tech         450000
+Rohit Das            Midnapore            BCA             12000
+Rimi Pal             Midnapore            MCA             14500
+
+10 rows selected.
+
+P_NAME               TITLE                          DEV_IN
+-------------------- ------------------------------ --------------------
+    S_COST     D_COST       SOLD
+---------- ---------- ----------
+Kamal Kumar Rana     Exam Manegement System         Java
+     45000      35000         15
+
+Rimpa Pal            Library Management System      Python
+     60000      40000         12
+
+Rakesh Roy           Railway Manegement System      ASP.NET
+    100000      75000         20
+
+
+P_NAME               TITLE                          DEV_IN
+-------------------- ------------------------------ --------------------
+    S_COST     D_COST       SOLD
+---------- ---------- ----------
+Suman Sen            Medical Shop Management System JavaScript
+     40000      25000          8
+
+Shartak Roy          Online Servey System           Python
+     35000      20000          6
+
+Riya Mondal          College DBMS                   Oracle
+     60000      45000         18
+
+
+P_NAME               TITLE                          DEV_IN
+-------------------- ------------------------------ --------------------
+    S_COST     D_COST       SOLD
+---------- ---------- ----------
+Sourav Rana          Railway DBMS                   Oracle
+     120000      90000         25
+
+Prity Roy            Online Shoping App             Java
+     85000      65000         12
+
+Rohit Das            College Website                Wordpress
+     95000      80000         18
+
+
+P_NAME               TITLE                          DEV_IN
+-------------------- ------------------------------ --------------------
+    S_COST     D_COST       SOLD
+---------- ---------- ----------
+Rimi Pal             Online Meeting App             Python
+     45000      29000         13
+
+
+10 rows selected.
+
+P_NAME               DOB       DOJ       SEX    PROF1      PROF2          SALARY
+-------------------- --------- --------- ------ ---------- ---------- ----------
+Kamal Kumar Rana     15-JUL-02 16-JUN-21 Male   Java       Python          60000
+Rimpa Pal            12-APR-96 25-JUN-18 Female Python     C++             65000
+Rakesh Roy           12-MAR-92 01-JUN-12 Male   ASP.NET    C#              80000
+Suman Sen            28-APR-96 10-JUL-17 Male   JavaScript C++             55000
+Shartak Roy          12-DEC-99 26-JAN-20 Male   Python     C               40000
+Riya Mondal          23-APR-00 25-FEB-20 Female Oracle     java            38500
+Sourav Rana          29-AUG-98 28-SEP-19 Male   Oracle     C#              45000
+Prity Roy            19-SEP-00 23-DEC-20 Female Java       C++             38000
+Rohit Das            15-MAY-01 12-JUN-21 Male   PHP        JavaScript      32000
+Rimi Pal             27-APR-97 13-FEB-19 Female Python     Java            66000
+
+10 rows selected.
+
+
+#1------------------------------------>
+SQL> select avg(S_Cost) "Average Saleing Cost" from software where dev_in ='Oracle';
+
+Average Saleing Cost
+--------------------
+               90000
+
+#2---------------------------------->
+SQL> select P_name, TRUNC(MONTHS_BETWEEN(SYSDATE,DOB)/12) "Age", TRUNC(MONTHS_BETWEEN(SYSDATE,DOJ)/12) "Experience" FROM PROGRAmmer;
+
+P_NAME                      Age Experience                     // Floor((sysdate-DOB)/365) same
+-------------------- ---------- ----------
+Kamal Kumar Rana             19          1
+Rimpa Pal                    26          4
+Rakesh Roy                  30         10
+Suman Sen                    26          4
+Shartak Roy                  22          2
+Riya Mondal                  22          2
+Sourav Rana                  23          2
+Prity Roy                    21          1
+Rohit Das                    21          1
+Rimi Pal                     25          3
+
+10 rows selected.
+#3------------------------------------------->
+SQL> select P_name from studies where course='M.Tech';
+
+P_NAME
+--------------------
+Suman Sen
+Prity Roy
+
+#4---------------------------
+SQL> select max(sold) "Highest Copies Sold" from software;
+
+Highest Copies Sold
+-----------
+         25
+#5----------------------------
+SQL> select P_name, DOB from programmer where DOB like '%APR%';
+
+P_NAME               DOB
+-------------------- ---------
+Rimpa Pal            12-APR-96
+Suman Sen            28-APR-96
+Riya Mondal          23-APR-00
+Rimi Pal             27-APR-97
+#6------------------------------
+SQL>  select min(C_cost) from studies;
+
+MIN(C_COST)
+-----------
+      12000
+#7----------------------------
+SQL> select count(*) "MCA" from studies where course='MCA';
+
+       MCA
+----------
+         3
+
+#8-------------------------------
+SQL> select * from software where P_name='Rakesh Roy';
+
+P_NAME               TITLE                          DEV_IN
+-------------------- ------------------------------ --------------------
+    S_COST     D_COST       SOLD
+---------- ---------- ----------
+Rakesh Roy           Railway Manegement System      ASP.NET
+    100000      75000         20
+
+#9---------------------------
+SQL> select count(*) "Studies at Pune" from studies where S_Place='Pune';
+
+Studies at Pune
+---------------
+              2
+#10--------------------------------
+SQL> select * from software where (sold*S_cost)>5000;
+
+P_NAME               TITLE                          DEV_IN
+-------------------- ------------------------------ --------------------
+    S_COST     D_COST       SOLD
+---------- ---------- ----------
+Kamal Kumar Rana     Exam Manegement System         Java
+     45000      35000         15
+
+Rimpa Pal            Library Management System      Python
+     60000      40000         12
+
+Rakesh Roy           Railway Manegement System      ASP.NET
+    100000      75000         20
+
+
+P_NAME               TITLE                          DEV_IN
+-------------------- ------------------------------ --------------------
+    S_COST     D_COST       SOLD
+---------- ---------- ----------
+Suman Sen            Medical Shop Management System JavaScript
+     40000      25000          8
+
+Shartak Roy          Online Servey System           Python
+     35000      20000          6
+
+Riya Mondal          College DBMS                   Oracle
+     60000      45000         18
+
+
+P_NAME               TITLE                          DEV_IN
+-------------------- ------------------------------ --------------------
+    S_COST     D_COST       SOLD
+---------- ---------- ----------
+Sourav Rana          Railway DBMS                   Oracle
+    120000      90000         25
+
+Prity Roy            Online Shoping App             Java
+     85000      65000         12
+
+Rohit Das            College Website                Wordpress
+     95000      80000         18
+
+
+P_NAME               TITLE                          DEV_IN
+-------------------- ------------------------------ --------------------
+    S_COST     D_COST       SOLD
+---------- ---------- ----------
+Rimi Pal             Online Meeting App             Python
+     45000      29000         13
+
+
+10 rows selected.
+#11------------------------------
+
+SQL> select round(D_cost/S_Cost)  from software where (S_cost*sold < D_cost);
+
+no rows selected
+#12---------------------------
+SQL> select * from software where d_cost<30000;
+
+P_NAME               TITLE                          DEV_IN
+-------------------- ------------------------------ --------------------
+    S_COST     D_COST       SOLD
+---------- ---------- ----------
+Suman Sen            Medical Shop Management System JavaScript
+     40000      25000          8
+
+Shartak Roy          Online Servey System           Python
+     35000      20000          6
+
+Rimi Pal             Online Meeting App             Python
+     45000      29000         13
+
+#13--------------------------------
+SQL> select max(S_cost) "Costliest Software" from software group by dev_in having dev_in='ASP.NET';
+
+Costliest Software
+------------------
+            100000S
+#14------------------------------
+SQL> select count(*) "Devolope in Oracle" from software where dev_in='Oracle';
+
+Devolope in Oracle
+------------------
+                 2
+#15-----------------------------------
+SQL> select count(*) "No of Course" from studies where C_cost between 10000 and 15000;
+
+No of Course
+------------
+           2
+#16-------------------------------
+SQL> select avg(C_cost) "Average Course Fee" from studies;
+
+Average Course Fee
+------------------
+            182650
+
+#17---------------------------
+SQL> select * from programmer where prof1='C' or prof2='C';
+
+P_NAME               DOB       DOJ       SEX    PROF1      PROF2          SALARY
+-------------------- --------- --------- ------ ---------- ---------- ----------
+Shartak Roy          12-DEC-99 26-JAN-20 Male   Python     C               40000
+
+#18----------------------------
+SQL> select * from programmer where prof1 IN('C','C#') or prof2 IN('C','C#');
+
+P_NAME               DOB       DOJ       SEX    PROF1      PROF2          SALARY
+-------------------- --------- --------- ------ ---------- ---------- ----------
+Rakesh Roy           12-MAR-92 01-JUN-12 Male   ASP.NET    C#              80000
+Shartak Roy          12-DEC-99 26-JAN-20 Male   Python     C               40000
+Sourav Rana          29-AUG-98 28-SEP-19 Male   Oracle     C#              45000
+#19--------------------------
+SQL> select * from programmer where prof1 NOT IN('C','C++') and prof2 NOT IN('C','C++');
+
+P_NAME               DOB       DOJ       SEX    PROF1      PROF2          SALARY
+-------------------- --------- --------- ------ ---------- ---------- ----------
+Kamal Kumar Rana     15-JUL-02 16-JUN-21 Male   Java       Python          60000
+Rakesh Roy           12-MAR-92 01-JUN-12 Male   ASP.NET    C#              80000
+Riya Mondal          23-APR-00 25-FEB-20 Female Oracle     java            38500
+Sourav Rana          29-AUG-98 28-SEP-19 Male   Oracle     C#              45000
+Rohit Das            15-MAY-01 12-JUN-21 Male   PHP        JavaScript      32000
+Rimi Pal             27-APR-97 13-FEB-19 Female Python     Java            66000
+
+6 rows selected.
+#20-------------------------
+SQL> select trunc(max(months_between(sysdate,dob)/12)) "Age of oldest Male Programmer" from programmer where sex='Male';
+
+Age of oldest Male Programmer
+-----------------------------
+                           30
+#21--------------------------
+SQL> select trunc(avg(months_between(sysdate,dob)/12)) "Average age of female" from programmer where sex='Female';
+
+Average age of female
+---------------------
+                   23
+#22----------------------------------
+SQL> select P_name, TRUNC(MONTHS_BETWEEN(SYSDATE,DOJ)/12) "Experience" FROM PROGRAmmer order by P_name desc;
+
+P_NAME               Experience
+-------------------- ----------
+Suman Sen                     4
+Sourav Rana                   2
+Shartak Roy                   2
+Rohit Das                     1
+Riya Mondal                   2
+Rimpa Pal                     4
+Rimi Pal                      3
+Rakesh Roy                   10
+Prity Roy                     1
+Kamal Kumar Rana              1
+
+10 rows selected.
+#23-------------------------------------------
+SQL> select * from programmer where To_char(DOB,'MON')=To_Char(sysdate,'MON');
+
+P_NAME               DOB       DOJ       SEX    PROF1      PROF2          SALARY
+-------------------- --------- --------- ------ ---------- ---------- ----------
+Kamal Kumar Rana     15-JUL-02 16-JUN-21 Male   Java       Python          60000
+#24--------------------------------------
+SQL> select count(*) "Female Programmer" from programmer where sex='Female';
+
+Female Programmer
+-----------------
+                4
+#25----------------------------
+SQL> select avg(salary) "Average salary" from programmer where sex='Male';
+
+Average salary
+--------------
+         52000
+#26----------------------------
+SQL> select count(*) "No of Salary" from programmer where salary between 50000 and 70000;
+
+No of Salary
+------------
+           4
+#27--------------------------
+SQL> select P_Name,Title,Dev_in,S_Cost from software  where S_Cost IN (select max(S_cost) from software group by P_name);
+
+P_NAME               TITLE                          DEV_IN
+-------------------- ------------------------------ --------------------
+    S_COST
+----------
+Rimi Pal             Online Meeting App             Python
+     45000
+
+Kamal Kumar Rana     Exam Manegement System         Java
+     45000
+
+Rakesh Roy           Railway Manegement System      ASP.NET
+    100000
+
+
+P_NAME               TITLE                          DEV_IN
+-------------------- ------------------------------ --------------------
+    S_COST
+----------
+Sourav Rana          Railway DBMS                   Oracle
+    120000
+
+Prity Roy            Online Shoping App             Java
+     85000
+
+Riya Mondal          College DBMS                   Oracle
+     60000
+
+
+P_NAME               TITLE                          DEV_IN
+-------------------- ------------------------------ --------------------
+    S_COST
+----------
+Rimpa Pal            Library Management System      Python
+     60000
+
+Suman Sen            Medical Shop Management System JavaScript
+     40000
+
+Rohit Das            College Website                Wordpress
+     95000
+
+
+P_NAME               TITLE                          DEV_IN
+-------------------- ------------------------------ --------------------
+    S_COST
+----------
+Shartak Roy          Online Servey System           Python
+     35000
+
+
+10 rows selected.
+
+#28-------------------------------------------------
+SQL>  select 'Mr. ' || P_name || '-has '|| trunc(months_between(sysdate,DOJ)/12) ||' year of experience' "Programmer" from programmer where SEX='Male';
+
+Programmer
+--------------------------------------------------------------------------------
+Mr. Kamal Kumar Rana    -has 1 year of experience
+Mr. Rakesh Roy          -has 10 year of experience
+Mr. Suman Sen           -has 4 year of experience
+Mr. Shartak Roy         -has 2 year of experience
+Mr. Sourav Rana         -has 2 year of experience
+Mr. Rohit Das           -has 1 year of experience
+
+6 rows selected.
+
+

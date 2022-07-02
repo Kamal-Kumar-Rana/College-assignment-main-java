@@ -300,3 +300,77 @@ SQL> select E_no,E_name,D_name,D_no from emp natural join dept;
          1 kamal                M.TECH             40
          2 samar                B.TECH             50
 
+//Outer Join----------------------------------->
+
+### Left Outer joint--->
+
+SQL> select * from emp,dept where emp.D_no=dept.D_no(+);
+SQL> select * from emp left outer join dept on  emp.D_no=dept.D_no;//Same
+
+      E_NO E_NAME                     D_NO       D_NO D_NAME
+---------- -------------------- ---------- ---------- ----------
+         4 tuhin                        10         10 MCA
+         3 chandan                      10         10 MCA
+         1 kamal                        40         40 M.TECH
+         2 samar                        50         50 B.TECH
+         5 ram                          60
+
+
+SQL> select * from dept left outer join emp on  emp.D_no=dept.D_no;
+
+      D_NO D_NAME           E_NO E_NAME                     D_NO
+---------- ---------- ---------- -------------------- ----------
+        40 M.TECH              1 kamal                        40
+        50 B.TECH              2 samar                        50
+        10 MCA                 3 chandan                      10
+        10 MCA                 4 tuhin                        10
+        30 BCA
+        20 MBA
+
+
+###Right Outer joint------------>
+SQL> select * from emp,dept where emp.D_no(+)=dept.D_no;
+SQL> select * from emp right outer join dept on  emp.D_no=dept.D_no;//Same
+
+
+      E_NO E_NAME                     D_NO       D_NO D_NAME
+---------- -------------------- ---------- ---------- ----------
+         1 kamal                        40         40 M.TECH
+         2 samar                        50         50 B.TECH
+         3 chandan                      10         10 MCA
+         4 tuhin                        10         10 MCA
+                                                   30 BCA
+                                                   20 MBA
+SQL> select * from dept right outer join emp on  emp.D_no=dept.D_no;
+
+      D_NO D_NAME           E_NO E_NAME                     D_NO
+---------- ---------- ---------- -------------------- ----------
+        10 MCA                 4 tuhin                        10
+        10 MCA                 3 chandan                      10
+        40 M.TECH              1 kamal                        40
+        50 B.TECH              2 samar                        50
+                               5 ram                          60
+###Full outer join----------------->
+SQL> select * from emp full outer join dept on emp.D_no=dept.D_no;
+
+      E_NO E_NAME                     D_NO       D_NO D_NAME
+---------- -------------------- ---------- ---------- ----------
+         4 tuhin                        10         10 MCA
+         3 chandan                      10         10 MCA
+                                                   20 MBA
+                                                   30 BCA
+         1 kamal                        40         40 M.TECH
+         2 samar                        50         50 B.TECH
+         5 ram                          60
+
+SQL> select * from dept full outer join emp on emp.D_no=dept.D_no;
+
+      D_NO D_NAME           E_NO E_NAME                     D_NO
+---------- ---------- ---------- -------------------- ----------
+        40 M.TECH              1 kamal                        40
+        50 B.TECH              2 samar                        50
+        10 MCA                 3 chandan                      10
+        10 MCA                 4 tuhin                        10
+                               5 ram                          60
+        30 BCA
+        20 MBA

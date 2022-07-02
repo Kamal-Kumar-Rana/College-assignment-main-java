@@ -1,0 +1,843 @@
+SQL> create table Emp(E_No number(10),E_Name char(20),D_Name char(10),Salary number(10), Job_Status varchar(15));
+
+Table created.
+
+     E_NO E_NAME               D_NAME              SALARY JOB_STATUS
+---------- -------------------- --------------- ---------- ---------------
+        18 Sumana dutta         Library              30000 Librarian
+        19 Avijit Patra         Account              15000 Clark
+        20 Rumpa Pal            Bsc CS               45000 Lecturer
+         5 Samar Karmakar       Bsc CS               50000 Lecturer
+         7 Ratan Pal            Bsc CS                7000 Clark
+         9 Chyan Manna          BCA                   8000 Clark
+        11 Arijit Kar           Account              60000 Accountant
+        13 Tonmoy Roy           Library              35000 Librarian
+       420 D Dua                BCA                   5000 Clark
+        17 A. K. Mondal         BCA                  55000 Lecturer
+        15 Sanali Pal           BCA                  55000 Lecturer
+
+      E_NO E_NAME               D_NAME              SALARY JOB_STATUS
+---------- -------------------- --------------- ---------- ---------------
+        10 Sayan Pal           Library                 4500 	Clark
+
+12 rows selected.
+#3---------------------------------------------------->
+SQL> select E_Name from emp where salary>6000;
+
+E_NAME
+--------------------
+Sumana dutta
+Avijit Patra
+Rumpa Pal
+Samar Karmakar
+Ratan Pal
+Chyan Manna
+Arijit Kar
+Tonmoy Roy
+A. K. Mondal
+Sanali Pal
+
+10 rows selected.
+$4----------------------------------------------------------->
+SQL> select E_Name,E_no,Job_Status from emp where salary between 7000 and 9000;
+
+E_NAME                     E_NO JOB_STATUS
+-------------------- ---------- ---------------
+Ratan Pal                     7 clark
+Chyan Manna                   9 clark
+
+#5---------------------------------------------------------->
+SQL> select E_name,job_Status from emp order by salary desc;
+
+E_NAME               JOB_STATUS
+-------------------- ---------------
+Arijit Kar           Accountant
+Sanali Pal           Lecturer
+A. K. Mondal         Lecturer
+Samar Karmakar       Lecturer
+Rumpa Pal            Lecturer
+Tonmoy Roy           Librarian
+Sumana dutta         Librarian
+Avijit Patra         Clark
+Chyan Manna          clark
+Ratan Pal            clark
+D Dua                clark
+
+E_NAME               JOB_STATUS
+-------------------- ---------------
+Sayan Pal            clark
+
+12 rows selected.
+#6------------------------------------------------------------>
+SQL> select * from emp where E_no in(9,11,13);
+
+      E_NO E_NAME               D_NAME              SALARY JOB_STATUS
+---------- -------------------- --------------- ---------- ---------------
+         9 Chyan Manna          BCA                   8000 clark
+        11 Arijit Kar           Account              60000 Accountant
+        13 Tonmoy Roy           Library              35000 Librarian
+
+#7-------------------------------------------------------->
+SQL> select * from emp where E_no not in(7,5,12);
+
+      E_NO E_NAME               D_NAME              SALARY JOB_STATUS
+---------- -------------------- --------------- ---------- ---------------
+        18 Sumana dutta         Library              30000 Librarian
+        19 Avijit Patra         Account              15000 Clark
+        20 Rumpa Pal            Bsc CS               45000 Lecturer
+         9 Chyan Manna          BCA                   8000 clark
+        11 Arijit Kar           Account              60000 Accountant
+        13 Tonmoy Roy           Library              35000 Librarian
+       420 D Dua                BCA                   5000 clark
+        17 A. K. Mondal         BCA                  55000 Lecturer
+        15 Sanali Pal           BCA                  55000 Lecturer
+        10 Sayan Pal            Library               4500 clark
+
+10 rows selected.
+#8------------------------------------------------------------------->
+SQL> select * from emp order by E_no asc;
+
+      E_NO E_NAME               D_NAME              SALARY JOB_STATUS
+---------- -------------------- --------------- ---------- ---------------
+         5 Samar Karmakar       Bsc CS               50000 Lecturer
+         7 Ratan Pal            Bsc CS                7000 clark
+         9 Chyan Manna          BCA                   8000 clark
+        10 Sayan Pal            Library               4500 clark
+        11 Arijit Kar           Account              60000 Accountant
+        13 Tonmoy Roy           Library              35000 Librarian
+        15 Sanali Pal           BCA                  55000 Lecturer
+        17 A. K. Mondal         BCA                  55000 Lecturer
+        18 Sumana dutta         Library              30000 Librarian
+        19 Avijit Patra         Account              15000 Clark
+        20 Rumpa Pal            Bsc CS               45000 Lecturer
+
+      E_NO E_NAME               D_NAME              SALARY JOB_STATUS
+---------- -------------------- --------------- ---------- ---------------
+       420 D Dua                BCA                   5000 clark
+
+12 rows selected.
+#9-------------------------------------------------------------->
+SQL> select E_name from emp where E_name like 'D%' or E_name like 'A%';
+
+E_NAME
+--------------------
+Avijit Patra
+Arijit Kar
+D Dua
+A. K. Mondal
+#10-------------------------------------------------------------->
+SQL> select E_name from emp where E_name like '_i%' or E_name like '_r%';
+
+E_NAME
+--------------------
+Arijit Kar
+
+#11---------------------------------------------------------->
+SQL> update emp set salary=salary+salary * 0.10;
+
+12 rows updated.
+     E_NO E_NAME               D_NAME              SALARY JOB_STATUS
+---------- -------------------- --------------- ---------- ---------------
+        18 Sumana dutta         Library              33000 Librarian
+        19 Avijit Patra         Account              16500 Clark
+        20 Rumpa Pal            Bsc CS               49500 Lecturer
+         5 Samar Karmakar       Bsc CS               55000 Lecturer
+         7 Ratan Pal            Bsc CS                7700 clark
+         9 Chyan Manna          BCA                   8800 clark
+        11 Arijit Kar           Account              66000 Accountant
+        13 Tonmoy Roy           Library              38500 Librarian
+       420 D Dua                BCA                   5500 clark
+        17 A. K. Mondal         BCA                  60500 Lecturer
+        15 Sanali Pal           BCA                  60500 Lecturer
+
+      E_NO E_NAME               D_NAME              SALARY JOB_STATUS
+---------- -------------------- --------------- ---------- ---------------
+        10 Sayan Pal            Library               4950 clark
+
+#12------------------------------------------------------------------->
+SQL> alter table emp add Ph_No number(10) add Email varchar(30);
+
+Table altered.
+
+#13---------------------------------------------------->
+SQL> delete from emp where salary < 5000;
+
+1 row deleted.
+SQL> select * from emp;
+
+      E_NO E_NAME               D_NAME              SALARY JOB_STATUS
+---------- -------------------- --------------- ---------- ---------------
+     PH_NO EMAIL
+---------- ------------------------------
+        18 Sumana dutta         Library              33000 Librarian
+
+
+        19 Avijit Patra         Account              16500 Clark
+
+
+        20 Rumpa Pal            Bsc CS               49500 Lecturer
+
+
+
+      E_NO E_NAME               D_NAME              SALARY JOB_STATUS
+---------- -------------------- --------------- ---------- ---------------
+     PH_NO EMAIL
+---------- ------------------------------
+         5 Samar Karmakar       Bsc CS               55000 Lecturer
+
+
+         7 Ratan Pal            Bsc CS                7700 clark
+
+
+         9 Chyan Manna          BCA                   8800 clark
+
+
+
+      E_NO E_NAME               D_NAME              SALARY JOB_STATUS
+---------- -------------------- --------------- ---------- ---------------
+     PH_NO EMAIL
+---------- ------------------------------
+        11 Arijit Kar           Account              66000 Accountant
+
+
+        13 Tonmoy Roy           Library              38500 Librarian
+
+
+       420 D Dua                BCA                   5500 clark
+
+
+
+      E_NO E_NAME               D_NAME              SALARY JOB_STATUS
+---------- -------------------- --------------- ---------- ---------------
+     PH_NO EMAIL
+---------- ------------------------------
+        17 A. K. Mondal         BCA                  60500 Lecturer
+
+
+        15 Sanali Pal           BCA                  60500 Lecturer
+
+
+
+11 rows selected.
+
+#14---------------------------------------------->
+SQL> alter table emp modify ( E_name char(30));
+
+Table altered.
+
+#15------------------------------------------------>
+SQL> update emp set E_Name='D dua',salary=25000 where E_No =420;
+
+1 row updated.
+#16------------------------------------------------------->
+SQL> select job_Status ,count(*) from emp group by Job_Status;
+
+JJOB_STATUS        COUNT(*)
+--------------- ----------
+Librarian                2
+Lecturer                 4
+Clark                    4
+Accountant               1
+#17----------------------------------------------------------->
+SQL> select job_Status,D_name ,count(*) from emp group by D_Name,Job_Status;
+
+JOB_STATUS      D_NAME            COUNT(*)
+--------------- --------------- ----------
+Clark           Bsc CS                   1
+Clark           Account                  1
+Clark           BCA                      2
+Lecturer        BCA                      2
+Librarian       Library                  2
+Accountant      Account                  1
+Lecturer        Bsc CS                   2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
