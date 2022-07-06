@@ -821,5 +821,185 @@ SQL> 1
 SQL> 2
   2* from birth
 
+SQL> desc std;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ S_NAME                                             CHAR(20)
+ S_ROLL                                    NOT NULL NUMBER(5)
+ ADDRESS                                            VARCHAR2(15)
+#Costrint----------------------------------->
+SQL> select * from std;
+
+S_NAME                   S_ROLL ADDRESS
+-------------------- ---------- ---------------
+Kamal                      1728 Ghatal
+Suvojit                    1757 Ghatal
+Shartak                    1760 Ghatal
+
+SQL> insert into std values('Riya','','WB");
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> insert into std values('Riya','','WB');
+insert into std values('Riya','','WB')
+                              *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("SYSTEM"."STD"."S_ROLL")
+
+
+SQL> insert into std values('Riya','1768','');
+
+1 row created.
+
+SQL> select * from std;
+
+S_NAME                   S_ROLL ADDRESS
+-------------------- ---------- ---------------
+Kamal                      1728 Ghatal
+Suvojit                    1757 Ghatal
+Shartak                    1760 Ghatal
+Riya                       1768
+
+
+SQL> alter table std modify S_name char(20)unique;
+
+Table altered.
+SQL> insert into std values ('Kamal',1798,'');
+insert into std values ('Kamal',1798,'')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C007148) violated
+
+
+SQL> create table person (P_id number(6) primary key, P_Name varchar(15) not null, city varchar(10));
+
+Table created.
+
+SQL> desc person
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ P_ID                                      NOT NULL NUMBER(6)
+ P_NAME                                    NOT NULL VARCHAR2(15)
+ CITY                                               VARCHAR2(10)
+
+SQL> create table Orders (Or_id number primary key,P_id number REFERENCES person,item varchar(15))
+  2  ;
+
+Table created.
+
+SQL> create table sale(Or_id number(6) primary key,P_id number(6),Item varchar(15));
+
+Table created.
+
+
+
+#Group by------------------------->
+SQL> select * from orders;
+
+PRODUCT               SALE
+--------------- ----------
+mouse                  200
+keyboard               300
+cabinet                900
+mouse                  500
+keyboard               800
+cabinet               1500
+
+6 rows selected.
+
+SQL> select product from orders group by product;
+
+PRODUCT
+---------------
+keyboard
+cabinet
+mouse
+
+SQL> select product,count(sale)"sale" from orders group by product;
+
+PRODUCT               sale
+--------------- ----------
+keyboard                 2
+cabinet                  2
+mouse                    2
+
+SQL> select product,sum(sale)"sale" from orders group by product;
+
+PRODUCT               sale
+--------------- ----------
+keyboard              1100
+cabinet               2400
+mouse                  700
+
+SQL> select product,max(sale)"sale" from orders group by product;
+
+PRODUCT               sale
+--------------- ----------
+keyboard               800
+cabinet               1500
+mouse                  500
+
+SQL> select product,min(sale)"sale" from orders group by product;
+
+PRODUCT               sale
+--------------- ----------
+keyboard               300
+cabinet                900
+mouse                  200
+
+SQL> select product,avg(sale)"sale" from orders group by product;
+
+PRODUCT               sale
+--------------- ----------
+keyboard               550
+cabinet               1200
+mouse                  350
+
+SQL> select product,count(sale)"sale" from orders group by product order by product;
+
+PRODUCT               sale
+--------------- ----------
+cabinet                  2
+keyboard                 2
+mouse                    2
+
+SQL> select product,sum(sale)"sale" from orders group by product;
+
+PRODUCT               sale
+--------------- ----------
+keyboard              1100
+cabinet               2400
+mouse                  700
+SQL> select product,sum(sale)"sale" from orders group by product having  sum(sale)>2000;
+
+PRODUCT               sale
+--------------- ----------
+cabinet               2400
+
+SQL> select product,count(*)"sale" from orders group by product having  count(sale)>1;
+
+PRODUCT               sale
+--------------- ----------
+keyboard                 2
+cabinet                  2
+mouse                    2
+
+SQL> select product,count(*)"sale" from orders group by product having  count(*)>1;
+
+PRODUCT               sale
+--------------- ----------
+keyboard                 2
+cabinet                  2
+mouse                    2
+#Nested Quary-------------------------
+SQL> select * from orders where product in(select product from orders where sale >600);
+
+PRODUCT               SALE
+--------------- ----------
+cabinet               1500
+cabinet                900
+keyboard               800
+keyboard               300
 
 
