@@ -374,3 +374,452 @@ SQL> select * from dept full outer join emp on emp.D_no=dept.D_no;
                                5 ram                          60
         30 BCA
         20 MBA
+
+#Aggrigation function--------------------------------->
+SQL> select * from programmer;
+
+P_NAME               DOB       DOJ       SEX    PROF1      PROF2          SALARY
+-------------------- --------- --------- ------ ---------- ---------- ----------
+Kamal Kumar Rana     15-JUL-02 16-JUN-21 Male   Java       Python          60000
+Rimpa Pal            12-APR-96 25-JUN-18 Female Python     C++             65000
+Rakesh Roy           12-MAR-92 01-JUN-12 Male   ASP.NET    C#              80000
+Suman Sen            28-APR-96 10-JUL-17 Male   JavaScript C++             55000
+Shartak Roy          12-DEC-99 26-JAN-20 Male   Python     C               40000
+Riya Mondal          23-APR-00 25-FEB-20 Female Oracle     java            38500
+Sourav Rana          29-AUG-98 28-SEP-19 Male   Oracle     C#              45000
+Prity Roy            19-SEP-00 23-DEC-20 Female Java       C++             38000
+Rohit Das            15-MAY-01 12-JUN-21 Male   PHP        JavaScript      32000
+Rimi Pal             27-APR-97 13-FEB-19 Female Python     Java            66000
+SQL> select avg(salary)"avg" from programmer;
+
+       avg
+----------
+     51950
+
+SQL> select max(salary) from programmer;
+
+MAX(SALARY)
+-----------
+      80000
+
+SQL> select min(salary) from programmer;
+
+MIN(SALARY)
+-----------
+      32000
+
+SQL> select stddev(salary) from programmer;
+
+STDDEV(SALARY)
+--------------
+    15610.6267
+
+SQL> select variance(salary) from programmer;
+
+VARIANCE(SALARY)
+----------------
+       243691667
+
+#Column formatting
+SQL> column salary format 9,99,999.99;
+SQL> select P_Name,salary from programmer;
+
+P_NAME                     SALARY
+-------------------- ------------
+Kamal Kumar Rana        60,000.00
+Rimpa Pal               65,000.00
+Rakesh Roy              80,000.00
+Suman Sen               55,000.00
+Shartak Roy             40,000.00
+Riya Mondal             38,500.00
+Sourav Rana             45,000.00
+Prity Roy               38,000.00
+Rohit Das               32,000.00
+Rimi Pal                66,000.00
+
+10 rows selected.
+SQL> column P_name format a3 trunc;
+SQL> select P_Name,salary from programmer;
+
+P_N       SALARY
+--- ------------
+Kam    60,000.00
+Rim    65,000.00
+Rak    80,000.00
+Sum    55,000.00
+Sha    40,000.00
+Riy    38,500.00
+Sou    45,000.00
+Pri    38,000.00
+Roh    32,000.00
+Rim    66,000.00
+
+10 rows selected.
+
+
+
+SQL> select * from project;
+
+      P_NO P_NAME                         P_MANAGER
+---------- ------------------------------ --------------------
+        10 Library Manegement System      Ratan Das
+        20 Railway Management System      Samir Rana
+        30 Medical Shop Manage system     Soma Roy
+        40 Exam Manegement System         Anupam Bose
+        50 Online servay System           Riya Das
+        60 College DBMS                   Rohit Roy
+                                          Rimpa sen
+                                          Rishikash Bowmik
+
+8 rows selected.
+
+SQL> select count(P_no) from project;
+
+COUNT(P_NO)
+-----------
+          6
+
+SQL> select count(P_Manager) from project;
+
+COUNT(P_MANAGER)
+----------------
+               8
+
+SQL> select count(*) from project;
+
+  COUNT(*)
+----------
+         8
+SQL> select count(distinct P_no) from project;
+
+COUNT(DISTINCTP_NO)
+-------------------
+                  6
+
+SQL> select length('I am kamal') from dual;
+
+LENGTH('IAMKAMAL')
+------------------
+                10
+
+SQL> select substr('I am kamal',3,4) from dual;
+
+SUBS
+----
+am k
+
+SQL> select instr('I am kamal','am') from dual;
+
+INSTR('IAMKAMAL','AM')
+----------------------
+                     3
+
+SQL> select instr('I am kamal','am') from dual;
+
+INSTR('IAMKAMAL','AM')
+----------------------
+                     3
+
+SQL> select greatest(65,69,45,52) from dual;
+
+GREATEST(65,69,45,52)
+---------------------
+                   69
+
+SQL> select least(65,69,45,52) from dual;
+
+LEAST(65,69,45,52)
+------------------
+                45
+
+
+#Number function--------------------------
+SQL> select abs (-789) from dual;
+
+ ABS(-789)
+----------
+       789
+
+SQL> select abs (789) from dual;
+
+  ABS(789)
+----------
+       789
+
+SQL> select ceil(456.54) from dual;
+
+CEIL(456.54)
+------------
+         457
+
+SQL> select ceil(456.14) from dual;
+
+CEIL(456.14)
+------------
+         457
+
+SQL> select floor(456.14) from dual;
+
+FLOOR(456.14)
+-------------
+          456
+
+SQL> select round(456.54,0) , round(456.54,1) from dual;
+
+ROUND(456.54,0) ROUND(456.54,1)
+--------------- ---------------
+            457           456.5
+
+SQL> select round(456.54,3) , round(456.54,2) from dual;
+
+ROUND(456.54,3) ROUND(456.54,2)
+--------------- ---------------
+         456.54          456.54
+
+SQL> select round(456.54,3) , round(456.54,100) from dual;
+
+ROUND(456.54,3) ROUND(456.54,100)
+--------------- -----------------
+         456.54            456.54
+
+SQL> select round(456.12,0) , round(456.12,1) from dual;
+
+ROUND(456.12,0) ROUND(456.12,1)
+--------------- ---------------
+            456           456.1
+
+SQL> select sqrt(9) from dual;
+
+   SQRT(9)
+----------
+         3
+
+SQL> select sqrt(81) from dual;
+
+  SQRT(81)
+----------
+         9
+
+SQL> select sqrt(80) from dual;
+
+  SQRT(80)
+----------
+8.94427191
+
+SQL> select trunc(456.54,0) , trunc(456.5,1) from dual;
+
+TRUNC(456.54,0) TRUNC(456.5,1)
+--------------- --------------
+            456          456.5
+
+SQL> select cos(90) from dual;
+
+   COS(90)
+----------
+-.44807362
+
+SQL> select cosh(90) from dual;
+
+  COSH(90)
+----------
+6.1020E+38
+
+#Conversion function------------------>
+
+SQL> insert into birth values('Ram','6-sep-89')
+  2  ;
+
+1 row created.
+
+SQL> insert into birth values('Robi','89-sep-9');
+insert into birth values('Robi','89-sep-9')
+                                *
+ERROR at line 1:
+ORA-01847: day of month must be between 1 and last day of month
+
+
+SQL> insert into birth values('Robi',to_date('89-sep-9','yy-mm-dd'));
+
+1 row created.
+
+SQL> select * from birth;
+
+NAME            DOB
+--------------- ---------
+Ram             06-SEP-89
+Robi            09-SEP-89
+
+SQL> select name, to_char(dob,'mm') from birth ;
+
+NAME            TO
+--------------- --
+Ram             09
+Robi            09
+
+SQL> select name, to_char(dob,'yyyy') from birth ;
+
+NAME            TO_C
+--------------- ----
+Ram             1989
+Robi            2089
+
+SQL> select name, to_char(dob,'yy') from birth ;
+
+NAME            TO
+--------------- --
+Ram             89
+Robi            89
+
+SQL> select name, to_char(dob,'yyyy') from birth ;
+
+NAME            TO_C
+--------------- ----
+Ram             1989
+Robi            2089
+SQL> select name, dob from birth where to_char(dob,'q')='3';
+
+NAME            DOB
+--------------- ---------
+Ram             06-SEP-89
+Robi            09-SEP-89
+
+SQL> select P_no,P_manager from project;
+
+      P_NO P_MANAGER
+---------- --------------------
+        10 Ratan Das
+        20 Samir Rana
+        30 Soma Roy
+        40 Anupam Bose
+        50 Riya Das
+        60 Rohit Roy
+           Rimpa sen
+           Rishikash Bowmik
+
+8 rows selected.
+
+SQL> select nvl(P_no,00),P_manager from project;
+
+NVL(P_NO,00) P_MANAGER
+------------ --------------------
+          10 Ratan Das
+          20 Samir Rana
+          30 Soma Roy
+          40 Anupam Bose
+          50 Riya Das
+          60 Rohit Roy
+           0 Rimpa sen
+           0 Rishikash Bowmik
+
+8 rows selected.
+
+#date function--------------------------->
+
+SQL> select add_months('05-jan-22',5) from dual;
+
+ADD_MONTH
+---------
+05-JUN-22
+
+SQL> select add_months(sysdate,5) from dual;
+
+ADD_MONTH
+---------
+06-DEC-22
+
+SQL> select last_day(sysdate) from dual;
+
+LAST_DAY(
+---------
+31-JUL-22
+
+SQL> select months_between(sysdate,'12-10-22') from dual;
+select months_between(sysdate,'12-10-22') from dual
+                              *
+ERROR at line 1:
+ORA-01843: not a valid month
+
+
+SQL> select months_between(sysdate,'12-oct-22') from dual;
+
+MONTHS_BETWEEN(SYSDATE,'12-OCT-22')
+-----------------------------------
+                          -3.176194
+
+SQL> select trunc(months_between(sysdate,'12-oct-22')) from dual;
+
+TRUNC(MONTHS_BETWEEN(SYSDATE,'12-OCT-22'))
+------------------------------------------
+                                        -3
+
+SQL> select abs(trunc(months_between(sysdate,'12-oct-22'))) from dual;
+
+ABS(TRUNC(MONTHS_BETWEEN(SYSDATE,'12-OCT-22')))
+-----------------------------------------------
+                                              3
+
+SQL> select trunc(months_between(sysdate,'15-jul-2002')) from dual;
+
+TRUNC(MONTHS_BETWEEN(SYSDATE,'15-JUL-2002'))
+--------------------------------------------
+                                         239
+
+SQL> select (months_between(sysdate,'15-jul-2002')) from dual;
+
+(MONTHS_BETWEEN(SYSDATE,'15-JUL-2002'))
+---------------------------------------
+                             239.727075
+
+SQL> select trunc(months_between(sysdate,'15-jul-2002')/12) from dual;
+
+TRUNC(MONTHS_BETWEEN(SYSDATE,'15-JUL-2002')/12)
+-----------------------------------------------
+                                             19
+
+SQL> select (months_between(sysdate,'15-jul-2002')/12) from dual;
+
+(MONTHS_BETWEEN(SYSDATE,'15-JUL-2002')/12)
+------------------------------------------
+                                 19.977257
+
+SQL> select (months_between(sysdate,'15-jul-2002')/12) from dual;
+
+(MONTHS_BETWEEN(SYSDATE,'15-JUL-2002')/12)
+------------------------------------------
+                                19.9772576
+
+SQL> select months_between(sysdate,'12-oct-22') from dual;
+
+MONTHS_BETWEEN(SYSDATE,'12-OCT-22')
+-----------------------------------
+                         -3.1761316
+
+SQL> select next_day(sysdate,'mon') from dual;
+
+NEXT_DAY(
+---------
+11-JUL-22
+
+
+SQL> select new_time(sysdate,'bst','gmt') from dual;
+
+NEW_TIME(
+---------
+07-JUL-22
+
+#------------------------------>
+SQL> select *
+  2  from birth;
+
+NAME            DOB
+--------------- ---------
+Ram             06-SEP-89
+Robi            09-SEP-89
+
+SQL> 1
+  1* select *
+SQL> 2
+  2* from birth
+
+
+
