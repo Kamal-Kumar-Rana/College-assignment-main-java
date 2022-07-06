@@ -69,33 +69,53 @@ SQL>select * from Employee where salary > 80000 and E_No in (select  E_No from d
        225 Priya Mondal              84000
 
 #3-----------
-SQL> select E_no from employee order by E_Name asc;
-
-      E_NO
-----------
-       101
-       215
-       210
-       225
-       102
-       103
-       220
-
-7 rows selected.
-
-SQL> select E_no from employee order by salary asc;
+SQL> select E_no  from Employee order by E_no;
 
       E_NO
 ----------
        101
        102
        103
-       220
-       215
-       225
        210
+       215
+       220
+       225
+       301
+       305
 
-7 rows selected.
+9 rows selected.
+
+SQL> select E_Name from Employee order by E_name;
+
+E_NAME
+--------------------
+Ankita Karmakar
+Arpan Roy
+Asit Monda
+Kamal Kumar Rana
+Krishna Das
+Priya Mondal
+Rahul Sen
+Rimi Pal
+Shartak pal
+
+9 rows selected.
+
+SQL> select salary from Employee order by salary;
+
+    SALARY
+----------
+     45000
+     50000
+     60000
+     60000
+     81000
+     82000
+     84000
+     85000
+     86000
+
+9 rows selected.
 
 #4------------------------->
 SQL> select E_Name from Employee where E_No in(select E_no from assignedto where P_No in(30));
